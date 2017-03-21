@@ -177,7 +177,13 @@ public class MMSeg {
 				do {
 					Chunk chunk = seg.seg(currentSentence);
 					for(int i=0; i<chunk.getCount(); i++) {
-						bufWord.add(chunk.getWords()[i]);
+						Word w = chunk.getWords()[i];
+						bufWord.add(w);
+						Phonetic phonetic = Phonetic.getInstance();
+						String t = phonetic.match(w);
+						if (t != null) {
+							bufWord.add(new Word(t.toCharArray(), w.getStartOffset()));
+						}
 					}
 				} while (!currentSentence.isFinish());
 				
